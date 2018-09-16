@@ -1,0 +1,97 @@
+import cargas.*
+import empresa.*
+import vehiculos.*
+
+test "check one" {
+	ladrillos.cantidad(900)
+	empresa.recibir([ladrillos, knight, bumblebee])
+	empresa.llenarCamion()
+	assert.equals(2300, camion.pesoActual() )
+	assert.equals([bumblebee], empresa.getterDeposito() )
+}
+
+test "check two" {
+	bumblebee.forma(robot)
+	ladrillos.cantidad(100)
+	empresa.recibir([ladrillos, knight, bumblebee])
+	empresa.llenarCamion()
+	assert.equals(bumblebee, camion.elementoMasPeligroso() )
+	assert.equals([], empresa.getterDeposito() )		
+}
+
+test "check three" {
+	assert.equals(false, camion.elementoMasPeligroso() )		
+}
+
+test "check four" {
+	assert.equals(true, camion.puedoIrPorRuta(0) )
+}
+
+test "check five - circulacion por ruta" {
+	bumblebee.forma(robot)
+	camion.cargar(bumblebee)
+	assert.equals(false, camion.puedoIrPorRuta(29) )
+	assert.equals(true, camion.puedoIrPorRuta(30) )
+	assert.equals(true, camion.puedoIrPorRuta(31) )	
+	bumblebee.forma(auto)
+	assert.equals(false, camion.puedoIrPorRuta(14) )
+	assert.equals(true, camion.puedoIrPorRuta(15) )
+	assert.equals(true, camion.puedoIrPorRuta(16) )			
+	camion.descargar(bumblebee)
+	camion.cargar(knight)
+	assert.equals(false, camion.puedoIrPorRuta(9) )
+	assert.equals(true, camion.puedoIrPorRuta(10) )
+	assert.equals(true, camion.puedoIrPorRuta(11) )	
+	camion.descargar(knight)
+	ladrillos.cantidad(50)
+	camion.cargar(ladrillos)
+	assert.equals(false, camion.puedoIrPorRuta(1) )
+	assert.equals(true, camion.puedoIrPorRuta(2) )
+	assert.equals(true, camion.puedoIrPorRuta(3) )		
+}
+
+test "check six" {
+	ladrillos.cantidad(50)
+	empresa.recibir([knight, ladrillos])
+	empresa.llenarMotoneta()
+	assert.equals(100, motoneta.pesoActual() )
+	assert.equals([knight], empresa.getterDeposito() )
+}
+
+test "check seven" {
+	assert.equals(0, contenedor.riesgo() )
+}
+
+test "check eight" {
+	ladrillos.cantidad(50)
+	bumblebee.forma(robot)
+	contenedor.contenido([knight, bumblebee, ladrillos])
+	assert.equals(1500, contenedor.peso() )
+	assert.equals(30, contenedor.riesgo() )		
+}
+
+test "check nine" {
+	ladrillos.cantidad(200)
+	bumblebee.forma(robot)
+	contenedor.contenido([knight, bumblebee, ladrillos])
+	empresa.recibir([contenedor])
+	empresa.llenarCamion()
+	assert.equals(1800, camion.pesoActual() )
+	assert.equals([], empresa.getterDeposito() )
+}
+
+test "check ten" {
+	bumblebee.forma(robot)
+	embalaje.elemento(bumblebee)
+	assert.equals(800, embalaje.peso() )	
+	assert.equals(15, embalaje.riesgo() )
+}
+
+test "check eleven" {
+	ladrillos.cantidad(50)
+	embalaje.elemento(ladrillos)
+	empresa.recibir([knight, ladrillos])
+	empresa.llenarMotoneta()
+	assert.equals(100, motoneta.pesoActual() )
+	assert.equals([knight], empresa.getterDeposito() )
+}
