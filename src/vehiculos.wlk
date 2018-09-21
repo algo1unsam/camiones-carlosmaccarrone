@@ -5,6 +5,7 @@ object camion {
 	var carga = []
 	const cargaMax = 2500
 	
+	// TODO este es un método de órden, de debería devolver nada
 	method cargar(_elemento){
 		return if( self.puedoCargar(_elemento) )
 		{ carga.add( _elemento) } else { false }
@@ -26,10 +27,14 @@ object camion {
 		return cargaMax - self.pesoActual()
 	}
 	
+	// TODO acá podías usar disponibilidad()
 	method puedoCargar(_elemento){
 		return cargaMax > ( self.pesoActual() + _elemento.peso() )
 	}		
 	
+	// TODO El default a lo mejor debería ser algo parecido a lo que devolvería en caso de haber algo en la lista
+	// en este caso, o bien o espero un elemento, o sino, si no hay elemento, que devuelva null.
+	// habría que ver que devuelve max, pero estoy tentada de decir que le else está demás
 	method elementoMasPeligroso(){
 		return if( !carga.isEmpty() ){
 			carga.max({ _elemento => _elemento.riesgo() })

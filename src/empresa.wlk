@@ -16,6 +16,9 @@ object empresa {
 		})
 	}
 	
+	
+	// TODO este método es exactamente igual al anterior, hay que ver como no repetir este código
+	// la forma mas simple sería que el vehículo llegue por parámetro
 	method llenarMotoneta(){
 		deposito.forEach({
 			_elemento => if( motoneta.puedoCargar(_elemento) ){
@@ -24,6 +27,7 @@ object empresa {
 		})		
 	}			
 
+	// TODO raro el nombre, pero ok !! :P
 	method getterDeposito(){
 		return deposito
 	}

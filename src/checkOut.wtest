@@ -2,6 +2,8 @@ import cargas.*
 import empresa.*
 import vehiculos.*
 
+// TODO no es muy descriptivo el nombre, como que tengo que leer el teste entero
+// para entender lo que queres testear
 test "check one" {
 	ladrillos.cantidad(900)
 	empresa.recibir([ladrillos, knight, bumblebee])
